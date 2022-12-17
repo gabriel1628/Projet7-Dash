@@ -35,7 +35,7 @@ RAY_SERVE_URI = 'http://127.0.0.1:8000/'
 
 # Chargement des data
 nan = 1.01010101 # NaN ne marche pas avec ray
-path = '/Users/gabriel/Documents/gabriel/Documents/Formation OC Data Scientist/Projet 7 Implementez un modele de scoring/'
+path = '/Users/gabriel/Documents/gabriel/Documents/Formation OC Data Scientist/Projet 7 Implementez un modele de scoring/data/'
 X, y = load_X_y(path, nan)
 
 left_column, right_column, _ = st.columns(3)
