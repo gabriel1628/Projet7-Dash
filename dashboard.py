@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 from matplotlib.colors import LinearSegmentedColormap
 import requests
+import s3fs
 
 st.set_page_config(layout="wide")
 
