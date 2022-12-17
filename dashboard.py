@@ -24,9 +24,9 @@ def request_prediction(model_uri, data_json):
 
 
 @st.cache(allow_output_mutation=True)
-def load_X_y(nan):
-    X = pd.read_csv('X.csv', index_col=0).fillna(nan)
-    y = pd.read_csv('y.csv', index_col=0)['TARGET']
+def load_X_y(path, nan):
+    X = pd.read_csv(path+'X.csv', index_col=0).fillna(nan)
+    y = pd.read_csv(path+'y.csv', index_col=0)['TARGET']
     return X, y
 
 
@@ -35,7 +35,8 @@ RAY_SERVE_URI = 'http://127.0.0.1:8000/'
 
 # Chargement des data
 nan = 1.01010101 # NaN ne marche pas avec ray
-X, y = load_X_y(nan)
+path = '/Users/gabriel/Documents/gabriel/Documents/Formation OC Data Scientist/Projet 7 Implementez un modele de scoring/'
+X, y = load_X_y(path, nan)
 
 left_column, right_column, _ = st.columns(3)
 
@@ -77,18 +78,15 @@ if client_id > 100001:
 
         # Colorbar
 
-        #colors = [(1,0,0)] + [(1, 1, 0)] + [(0,.8,0)]
-        #colors = ['r', 'darkorange', 'gold', 'limegreen', 'green']
-        colors = ['r', 'darkorange', 'gold', 'yellowgreen', 'limegreen', 'green']
+        colors = ['r', 'darkorange', 'gold', 'limegreen', 'green']
         # définition de la barre d'échelle:
-        cmap = LinearSegmentedColormap.from_list('my_list', colors, N=100)
+        cmap = (mpl.colors.ListedColormap(colors).with_extremes(over='0.25', under='0.75'))
 
         fig, ax = plt.subplots()
 
-        #pred = np.random.random()
+        #pred = 0.19
+        color = cmap(pred)
         pred = round(pred * 100, 2)
-
-        color = cmap(int(pred))
 
         ax.text(50, 20, f'{pred}%', fontsize=20, color=color, ha='center', va='center')
         rect1 = mpl.patches.Rectangle((0, -10),
@@ -121,7 +119,7 @@ if client_id > 100001:
     global_features, global_vals = global_features[:n_features], global_vals[:n_features]
 
     left_column_2, right_column_2 = st.columns(2)
-    # Plot graph
+    # Local importance
     with left_column_2:
         fig = plt.figure(figsize=(8, 6))
         plt.barh(local_features[::-1], local_vals[::-1],
@@ -135,11 +133,14 @@ if client_id > 100001:
 
         fig
 
+    # Global importance
     with right_column_2:
         fig = plt.figure(figsize=(8, 6))
         plt.barh(global_features[::-1], global_vals[::-1],
                  color=["red" if coef < 0 else "green" for coef in global_vals[::-1]])
-        #plt.xlim(-0.85, 0.85)
+        x1 = - abs(1.1 * global_vals[0])
+        x2 = - x1
+        plt.xlim(x1, x2)
         plt.xlabel('Contribution')
         plt.title('Importance globale', fontsize=20, va='bottom')
 
