@@ -24,20 +24,30 @@ def request_prediction(model_uri, data_json):
     return response.json()
 
 
-@st.cache(allow_output_mutation=True)
-def load_X_y(path, nan):
-    X = pd.read_csv(path+'X.csv', index_col=0).fillna(nan)
-    y = pd.read_csv(path+'y.csv', index_col=0)['TARGET']
-    return X, y
-
-
 # Adresse du modèle
 RAY_SERVE_URI = 'http://127.0.0.1:8000/'
 
+
 # Chargement des data
+
+# Create connection object.
+# `anon=False` means not anonymous, i.e. it uses access keys to pull data.
+fs = s3fs.S3FileSystem(anon=False,
+                       key=st.secrets["AWS_ACCESS_KEY_ID"],
+                       secret=st.secrets["AWS_SECRET_ACCESS_KEY"])
+
+# Retrieve file contents.
+# Uses st.experimental_memo to only rerun when the query changes or after 'ttl' seconds.
+#@st.experimental_memo(ttl=900)
+@st.cache(allow_output_mutation=True)
+def load_X_y(bucket, nan):
+    X = pd.read_csv(fs.open(f'{bucket}/X.csv', mode='rb')).fillna(nan)
+    y = pd.read_csv(fs.open(f'{bucket}/y.csv', mode='rb'))
+    return X, y
+
 nan = 1.01010101 # NaN ne marche pas avec ray
-path = '/Users/gabriel/Documents/gabriel/Documents/Formation OC Data Scientist/Projet 7 Implementez un modele de scoring/data/'
-X, y = load_X_y(path, nan)
+bucket = 'streamlit-test-bucket-14-12-22'
+X, y = load_X_y(bucket, nan)
 
 left_column, right_column, _ = st.columns(3)
 
