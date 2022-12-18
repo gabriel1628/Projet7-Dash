@@ -38,11 +38,11 @@ fs = s3fs.S3FileSystem(anon=False,
 
 # Retrieve file contents.
 # Uses st.experimental_memo to only rerun when the query changes or after 'ttl' seconds.
-@st.experimental_memo(ttl=900)
+@st.experimental_memo(ttl=3600)
 #@st.cache(allow_output_mutation=True)
 def load_X_y(bucket, nan):
-    X = pd.read_csv(fs.open(f'{bucket}/X.csv', mode='rb')).fillna(nan)
-    y = pd.read_csv(fs.open(f'{bucket}/y.csv', mode='rb'))
+    X = pd.read_csv(fs.open(f'{bucket}/X.csv', mode='rb'), index_col=0).fillna(nan)
+    y = pd.read_csv(fs.open(f'{bucket}/y.csv', mode='rb'), index_col=0)['TARGET']
     return X, y
 
 nan = 1.01010101 # NaN ne marche pas avec ray
