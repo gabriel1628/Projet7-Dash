@@ -1,0 +1,5 @@
+numpy
+pandas
+matplotlib
+requests
+s3fs
