@@ -49,7 +49,7 @@ nan = 1.01010101 # NaN ne marche pas avec ray
 bucket = 'streamlit-test-bucket-14-12-22'
 X, y = load_X_y(bucket, nan)
 
-left_column, right_column, _ = st.columns(3)
+left_column, middle_column, right_column = st.columns(3)
 
 with left_column:
     # Choix du client par son id
@@ -85,7 +85,7 @@ if client_id > 100001:
                                   index=5,
                                   key='n_features')
 
-    with right_column:
+    with middle_column:
 
         # Colorbar
 
@@ -123,6 +123,16 @@ if client_id > 100001:
         ax.text(50, -20, 'que le client soit solvable', fontsize=18, ha='center', va='center')
 
         fig
+
+    with right_column:
+        '# \n' * 5
+        if pred > 60:
+            result = '<span style="color:green">Accordé</span>'
+        else:
+            result = '<span style="color:red">Refusé</span>'
+
+        st.write('### Crédit ' + result, unsafe_allow_html=True)
+
 
     #       Feature importance
 
