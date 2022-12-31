@@ -46,7 +46,7 @@ def load_X_y(bucket, nan):
     return X, y
 
 nan = 1.01010101 # NaN ne marche pas avec ray
-bucket = 'streamlit-test-bucket-14-12-22'
+bucket = 'projet7-bucket'
 X, y = load_X_y(bucket, nan)
 
 left_column, middle_column, right_column = st.columns(3)
