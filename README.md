@@ -13,12 +13,10 @@ Vous (ne) pouvez (pas encore) accéder à l'application en cliquant sur le lien 
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://<your-custom-subdomain>.streamlit.app)
 
-Pour le moment, pour faire fonctionner l'application, il faut:
+Pour le déploiement en local (branche __local__) :
 
 - déployer le modèle en utilisant Ray Serve avec la commande : <br>
 `serve run deployment:defaultrisk_pipeline`
 
 - déployer le dashboard en utilisant streamlit avec la commande : <br>
 `streamlit run dashboard.py`
-
-Problème : les data sont sur mon compte AWS et je ne sais pas comment les partager pour l'instant...
