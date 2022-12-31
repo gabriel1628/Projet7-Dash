@@ -1,5 +1,8 @@
 # Projet-7
 
+Pour utiliser l'application déployée sur le cloud utiliser la branche __main__, pour déployer l'application en
+locale, utiliser la branche __local__.
+
 Ce repo contient des livrables du projet 7 de la formation Data Scientist chez OpenClassrooms.
 On peut y trouver les codes pour le déploiement du modèle et du dashboard. On y trouve notamment :
 - Modelisation.ipynb : le notebook pour la modélisation des données.
