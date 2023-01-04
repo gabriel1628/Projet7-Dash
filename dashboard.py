@@ -3,9 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-from matplotlib.colors import LinearSegmentedColormap
 import requests
-import s3fs
 
 st.set_page_config(layout="wide")
 
@@ -23,13 +21,14 @@ def request_prediction(model_uri, data_json):
 
 
 # Adresse du modèle
-model_uri = 'http://127.0.0.1:80/'
+#model_uri = 'http://127.0.0.1:80/' # local
+model_uri = 'http://35.180.69.239:80/' # cloud
 
 # Chargement des data
 @st.cache(allow_output_mutation=True)
 def load_X_y(nan):
-    X = pd.read_csv('https://projet7-bucket.s3.eu-west-3.amazonaws.com/X.csv'), index_col=0).fillna(nan)
-    y = pd.read_csv('https://projet7-bucket.s3.eu-west-3.amazonaws.com/y.csv'), index_col=0)['TARGET']
+    X = pd.read_csv('https://projet7-bucket.s3.eu-west-3.amazonaws.com/X.csv', index_col=0).fillna(nan)
+    y = pd.read_csv('https://projet7-bucket.s3.eu-west-3.amazonaws.com/y.csv', index_col=0)['TARGET']
     return X, y
 
 nan = 1.01010101 # remplacement des NaN par cette valeur
