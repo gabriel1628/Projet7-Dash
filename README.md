@@ -9,9 +9,9 @@ On peut y trouver les codes pour le déploiement du modèle et du dashboard. On 
 - deployment.py : le code pour déployer le modèle sous forme d'API.
 - dashboard.py : le code du dashboard déployé via `streamlit`.
 
-Vous (ne) pouvez (pas encore) accéder à l'application en cliquant sur le lien ci-dessous :
+Vous pouvez accéder à l'application en cliquant sur le lien ci-dessous :
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://<your-custom-subdomain>.streamlit.app)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://gabriel1628-projet-7-dashboard-umy46h.streamlit.app)
 
 Pour le déploiement en local (branche __local__) :
 
