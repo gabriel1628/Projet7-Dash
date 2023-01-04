@@ -13,9 +13,7 @@ st.set_page_config(layout="wide")
 @st.cache
 def request_prediction(model_uri, data_json):
     headers = {"Content-Type": "application/json"}
-
-    response = requests.request(
-        method='POST', headers=headers, url=model_uri, json=data_json)
+    response = requests.request(method='POST', headers=headers, url=model_uri, json=data_json)
 
     if response.status_code != 200:
         raise Exception(
@@ -25,30 +23,19 @@ def request_prediction(model_uri, data_json):
 
 
 # Adresse du modèle
-RAY_SERVE_URI = 'http://127.0.0.1:8000/'
-
+model_uri = 'http://127.0.0.1:80/'
 
 # Chargement des data
-
-# Create connection object.
-# `anon=False` means not anonymous, i.e. it uses access keys to pull data.
-fs = s3fs.S3FileSystem(anon=False,
-                       key=st.secrets["AWS_ACCESS_KEY_ID"],
-                       secret=st.secrets["AWS_SECRET_ACCESS_KEY"])
-
-# Retrieve file contents.
-# Uses st.experimental_memo to only rerun when the query changes or after 'ttl' seconds.
-@st.experimental_memo(ttl=3600)
-#@st.cache(allow_output_mutation=True)
-def load_X_y(bucket, nan):
-    X = pd.read_csv(fs.open(f'{bucket}/X.csv', mode='rb'), index_col=0).fillna(nan)
-    y = pd.read_csv(fs.open(f'{bucket}/y.csv', mode='rb'), index_col=0)['TARGET']
+@st.cache(allow_output_mutation=True)
+def load_X_y(nan):
+    X = pd.read_csv('https://projet7-bucket.s3.eu-west-3.amazonaws.com/X.csv'), index_col=0).fillna(nan)
+    y = pd.read_csv('https://projet7-bucket.s3.eu-west-3.amazonaws.com/y.csv'), index_col=0)['TARGET']
     return X, y
 
-nan = 1.01010101 # NaN ne marche pas avec ray
-bucket = 'projet7-bucket'
-X, y = load_X_y(bucket, nan)
+nan = 1.01010101 # remplacement des NaN par cette valeur
+X, y = load_X_y(nan)
 
+# First block
 left_column, middle_column, right_column = st.columns(3)
 
 with left_column:
@@ -56,12 +43,12 @@ with left_column:
     client_id = st.number_input("Client ID", key="client_id", min_value=100001, step=1)
 
 if client_id > 100001:
-
     data_json = {'data': [X.loc[client_id].to_list()],
                  'features_name': list(X.columns)}
 
-    response_json = request_prediction(RAY_SERVE_URI, data_json)
-    pred, global_features, global_vals, local_features, local_vals, X_imp = response_json.values()
+    response_json = request_prediction(model_uri, data_json)
+    #pred, global_features, global_vals, local_features, local_vals, X_imp = response_json.values()
+    X_imp, global_features, global_vals, local_features, local_vals, pred = response_json.values()
     X_imp = pd.DataFrame(X_imp, columns=X.columns)
 
     #       First part

@@ -57,7 +57,7 @@ def get_prediction():
         global_vals = - coefs[coefs_abs_sort.index].values  # on prend l'opposé pour plus de lisibilité
 
         ## Local importance
-        explanation = explainer.explain_instance(data,
+        explanation = explainer.explain_instance(data[0],
                                                  pipeline['model'].predict_proba,
                                                  num_features=20)
 
@@ -69,7 +69,7 @@ def get_prediction():
 
         # Imputation
         imputer = pipeline[0]
-        X_imp = imputer.transform(np.array(data_json['data']))
+        X_imp = imputer.transform(np.array(data))
 
     return {'prediction': pred, 'global_imp_features': global_feats, 'global_imp_values': global_vals,
             'local_imp_features': local_feats, 'local_imp_values': local_vals, 'X_imputed': X_imp}
