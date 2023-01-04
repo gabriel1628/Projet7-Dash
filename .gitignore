@@ -44,4 +44,4 @@ Thumbs.db
 ######################
 *.streamlit
 .idea/
-__pycache__
+__pycache__/
