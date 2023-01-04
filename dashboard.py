@@ -42,7 +42,7 @@ with left_column:
     client_id = st.number_input("Client ID", key="client_id", min_value=100001, step=1)
 
 if client_id > 100001:
-    data_json = {'data': [X.loc[client_id].to_list()],
+    data_json = {'data': X.loc[client_id].to_list(),
                  'features_name': list(X.columns)}
 
     response_json = request_prediction(model_uri, data_json)
