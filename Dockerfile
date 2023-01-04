@@ -1,5 +1,5 @@
 FROM python:3.9-slim
-COPY ./flask_deployment.py /deploy/
+COPY model_deployment.py /deploy/
 COPY ./requirements.txt /deploy/
 COPY ./pipeline_projet7.joblib /deploy/
 COPY ./explainer.dill /deploy/
