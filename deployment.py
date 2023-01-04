@@ -21,8 +21,7 @@ class PipelineHandler:
         # Prediction
         pred = self.pipeline.predict_proba(input['data'])[0, 0]
 
-        # Feature importance
-
+        #   Feature importance
         # Global importance
         model = self.pipeline['model']
         coefs = pd.Series(model.coef_[0], index=input['features_name'])

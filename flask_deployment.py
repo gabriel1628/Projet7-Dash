@@ -1,4 +1,5 @@
 import joblib
+import json
 from flask import Flask, request
 import numpy as np
 
@@ -13,20 +14,30 @@ def load_model():
 
 app = Flask(__name__)
 
-# home endpoint, which when hit, returns a ‘Hello World!’ message.
-@app.route('/')
-def home_endpoint():
-    return 'Hello World!'
+# Customized JSONEncoder class to serialize numpy objects
+class NpEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        if isinstance(obj, np.floating):
+            return float(obj)
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return super(NpEncoder, self).default(obj)
 
 
-@app.route('/predict', methods=['POST'])
+app.json_encoder = NpEncoder
+
+@app.route('/', methods=['POST'])
 def get_prediction():
     # Works only for a single sample
     if request.method == 'POST':
-        data = request.get_json()  # Get data posted as a json
+        data_json = request.get_json()  # Get data posted as a json
+        data = data_json['data']
         data = np.array(data)[np.newaxis, :]  # converts shape from (p,) to (1, p)
         prediction = model.predict(data)  # runs globally loaded model on the data
-    return str(prediction[0])
+    return {'prediction': prediction}
+    #return str(prediction[0])
 
 
 if __name__ == '__main__':
