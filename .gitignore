@@ -20,7 +20,6 @@
 *.zip
 # Logs and databases #
 ######################
-*.streamlit
 *.log
 *.sql
 *.sqlite
@@ -41,3 +40,8 @@ Thumbs.db
 # Data directory #
 ######################
 *data
+# Miscellaneous #
+######################
+*.streamlit
+.idea/
+__pycache__/
