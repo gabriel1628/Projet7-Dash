@@ -12,7 +12,7 @@ client_id = 100004
 
 # 3: Query the deployment and print the result
 data_json = {'data': X.loc[client_id].to_list(),
-             #'features_name': list(X.columns)
+             'features_name': list(X.columns)
              }
 headers = {"Content-Type": "application/json"}
 #model_uri = 'http://35.180.69.239:80/predict'
