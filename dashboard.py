@@ -108,7 +108,7 @@ if client_id > 100001:
         ax.set_title('Prédiction du modèle', fontsize=20, fontweight='bold')
         ax.text(50, -20, 'que le client soit solvable', fontsize=18, ha='center', va='center')
 
-        fig
+        st.pyplot(fig)
 
     with right_column:
         '# \n' * 5
@@ -138,7 +138,7 @@ if client_id > 100001:
         plt.xlabel('Contribution')
         plt.title('Importance locale', fontsize=20, va='bottom')
 
-        fig
+        st.pyplot(fig)
 
     # Global importance
     with right_column_2:
@@ -151,7 +151,7 @@ if client_id > 100001:
         plt.xlabel('Contribution')
         plt.title('Importance globale', fontsize=20, va='bottom')
 
-        fig
+        st.pyplot(fig)
 
 
     #   Distribution
@@ -214,4 +214,4 @@ if client_id > 100001:
         ax.legend()
         ax.set_xlim(xlims)
 
-        fig
+        st.pyplot(fig)
