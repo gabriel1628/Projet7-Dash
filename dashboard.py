@@ -1,9 +1,9 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import matplotlib as mpl
 mpl.use('TkAgg') # utilisation du backend TkAgg
+import matplotlib.pyplot as plt
 import requests
 
 st.set_page_config(layout="wide")
