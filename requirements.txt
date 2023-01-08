@@ -5,8 +5,8 @@ pandas
 scikit-learn
 imbalanced-learn
 lime
-matplotlib
 tk
+matplotlib
 seaborn
 flask
 requests
