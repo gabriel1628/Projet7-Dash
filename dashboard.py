@@ -3,6 +3,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+from matplotlib.backends.backend_agg import RendererAgg
+_lock = RendererAgg.lock
 import requests
 
 st.set_page_config(layout="wide")
@@ -193,25 +195,26 @@ if client_id > 100001:
             n_bins = x[feature].unique().size // 10
         n_bins = min(n_bins, 300)
 
-        if clients == 'Tous les clients':
-            ax.hist(x.loc[y == 0, feature], bins=n_bins, density=normalize, label='Clients solvables')
-            ax.hist(x.loc[y == 1, feature], bins=n_bins, density=normalize, label='Clients insolvables',
-                    alpha=0.7)
-        else:
-            ax.hist(x[feature], bins=n_bins, density=normalize)
+        with _lock:
+            if clients == 'Tous les clients':
+                ax.hist(x.loc[y == 0, feature], bins=n_bins, density=normalize, label='Clients solvables')
+                ax.hist(x.loc[y == 1, feature], bins=n_bins, density=normalize, label='Clients insolvables',
+                        alpha=0.7)
+            else:
+                ax.hist(x[feature], bins=n_bins, density=normalize)
 
-        if xscale == 'Logarithmique':
-            ax.set_xscale('log')
-        if yscale == 'Logarithmique':
-            ax.set_yscale('log')
+            if xscale == 'Logarithmique':
+                ax.set_xscale('log')
+            if yscale == 'Logarithmique':
+                ax.set_yscale('log')
 
-        xlims = ax.get_xlim()
-        ax.plot(2 * [X_imp[feature]], ax.get_ylim(), 'r', alpha=0.5, linewidth=2,
-                label='client')
+            xlims = ax.get_xlim()
+            ax.plot(2 * [X_imp[feature]], ax.get_ylim(), 'r', alpha=0.5, linewidth=2,
+                    label='client')
 
-        ax.set_title('Distribution des valeurs', fontsize=16)
-        ax.set_xlabel(feature)
-        ax.legend()
-        ax.set_xlim(xlims)
+            ax.set_title('Distribution des valeurs', fontsize=16)
+            ax.set_xlabel(feature)
+            ax.legend()
+            ax.set_xlim(xlims)
 
-        st.pyplot(fig)
+            st.pyplot(fig)
