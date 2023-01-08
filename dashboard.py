@@ -1,9 +1,8 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-import tkinter
 import matplotlib as mpl
-mpl.use('TkAgg') # utilisation du backend TkAgg
+mpl.use('Agg') # backend
 import matplotlib.pyplot as plt
 import requests
 
