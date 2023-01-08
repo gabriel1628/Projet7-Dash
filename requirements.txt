@@ -6,7 +6,6 @@ scikit-learn
 imbalanced-learn
 lime
 matplotlib
-libtk8.6
 tk
 seaborn
 flask
