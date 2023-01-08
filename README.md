@@ -23,8 +23,7 @@ Vous pouvez accéder à l'application en cliquant sur le lien ci-dessous :
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://gabriel1628-projet-7-dashboard-umy46h.streamlit.app)
 
-Cependant, le dashboard risque de bugger et met beaucoup de temps à se lancer.
-Cela fonctionne mieux lorsqu'il est lancé depuis le terminal avec la commande `streamlit run dashboard.py`
+Le dashboard peut aussi être lancé depuis le terminal avec la commande `streamlit run dashboard.py`
 (streamlit doit être installé). Le dashboard peut mettre plusieurs minutes à se lancer la première fois.
 
 Si cela ne fonctionne plus, c'est que j'ai sûrement arrêté l'instance AWS EC2 qui héberge le modèle. Vous pouvez
