@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+mpl.use('TkAgg') # utilisation du backend TkAgg
 import requests
 
 st.set_page_config(layout="wide")
@@ -168,7 +169,17 @@ if client_id > 100001:
         yscale = st.selectbox('Choisissez l\'échelle des ordonnées',
                               ['Linéaire', 'Logarithmique'],
                               key='yscale_hist')
+        clients = st.selectbox('Comparaison avec',
+                               ['Tous les clients', 'Clients solvables', 'Clients insolvables'],
+                               key='comparison')
         normalize = st.checkbox('Normaliser', value=True)
+
+        if clients == 'Tous les clients':
+            pass
+        elif clients == 'Clients solvables':
+            x = x[y == 0]
+        else:
+            x = x[y == 1]
 
     with right_column_3:
         fig, ax = plt.subplots()
@@ -183,9 +194,12 @@ if client_id > 100001:
             n_bins = x[feature].unique().size // 10
         n_bins = min(n_bins, 300)
 
-        ax.hist(x.loc[y == 0, feature], bins=n_bins, density=normalize, label='Clients solvables')
-        ax.hist(x.loc[y == 1, feature], bins=n_bins, density=normalize, label='Clients insolvables',
-                alpha=0.7)
+        if clients == 'Tous les clients':
+            ax.hist(x.loc[y == 0, feature], bins=n_bins, density=normalize, label='Clients solvables')
+            ax.hist(x.loc[y == 1, feature], bins=n_bins, density=normalize, label='Clients insolvables',
+                    alpha=0.7)
+        else:
+            ax.hist(x[feature], bins=n_bins, density=normalize)
 
         if xscale == 'Logarithmique':
             ax.set_xscale('log')
