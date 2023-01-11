@@ -166,25 +166,7 @@ if client_id > 100001:
         feature = st.selectbox('Sélectionnez une variable',
                                X.columns.sort_values(),
                                key='select_features')
-        '''
-        xscale = st.selectbox('Choisissez l\'échelle des abscisses',
-                             ['Linéaire', 'Logarithmique'],
-                             key='xscale_hist')
-        yscale = st.selectbox('Choisissez l\'échelle des ordonnées',
-                              ['Linéaire', 'Logarithmique'],
-                              key='yscale_hist')
-        clients = st.selectbox('Comparaison avec',
-                               ['Tous les clients', 'Clients solvables', 'Clients insolvables'],
-                               key='comparison')
-        '''
         normalize = st.checkbox('Normaliser', value=True)
-
-        if clients == 'Tous les clients':
-            pass
-        elif clients == 'Clients solvables':
-            x = x[y == 0]
-        else:
-            x = x[y == 1]
 
     with right_column_3:
         if x[feature].unique().size < 10:
@@ -200,17 +182,9 @@ if client_id > 100001:
         with _lock:
             fig4 = Figure(figsize=(8,6))
             ax4 = fig4.subplots()
-            if clients == 'Tous les clients':
-                ax4.hist(x.loc[y == 0, feature], bins=n_bins, density=normalize, label='Clients solvables')
-                ax4.hist(x.loc[y == 1, feature], bins=n_bins, density=normalize, label='Clients insolvables',
-                        alpha=0.7)
-            else:
-                ax4.hist(x[feature], bins=n_bins, density=normalize)
-
-            if xscale == 'Logarithmique':
-                ax4.set_xscale('log')
-            if yscale == 'Logarithmique':
-                ax4.set_yscale('log')
+            ax4.hist(x.loc[y == 0, feature], bins=n_bins, density=normalize, label='Clients solvables')
+            ax4.hist(x.loc[y == 1, feature], bins=n_bins, density=normalize, label='Clients insolvables',
+                    alpha=0.7)
 
             xlims = ax4.get_xlim()
             ax4.plot(2 * [X_imp[feature]], ax4.get_ylim(), 'r', alpha=0.5, linewidth=2,
