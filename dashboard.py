@@ -166,6 +166,7 @@ if client_id > 100001:
         feature = st.selectbox('Sélectionnez une variable',
                                X.columns.sort_values(),
                                key='select_features')
+        '''
         xscale = st.selectbox('Choisissez l\'échelle des abscisses',
                              ['Linéaire', 'Logarithmique'],
                              key='xscale_hist')
@@ -175,6 +176,7 @@ if client_id > 100001:
         clients = st.selectbox('Comparaison avec',
                                ['Tous les clients', 'Clients solvables', 'Clients insolvables'],
                                key='comparison')
+        '''
         normalize = st.checkbox('Normaliser', value=True)
 
         if clients == 'Tous les clients':
