@@ -69,3 +69,8 @@ pour créer un bucket publique. Vous pourrez ensuite charger vos données dans l
 
 - Pour le dashboard :
   - retracer le graphe quand l'échelle des abscisses sélectionnée change et pas seulement changer l'échelle de l'axe
+
+
+## Ressources
+
+- https://towardsdatascience.com/simple-way-to-deploy-machine-learning-models-to-cloud-fd58b771fdcf
