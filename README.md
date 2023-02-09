@@ -15,3 +15,6 @@ Cependant, je vous conseille de choisir __Docker__ dans l'onglet __Environment__
 au moment de déployer l'application et le fichier ``Dockerfile`` sera utilisé pour le déploiement. Lorsque j'ai essayé
 avec Python ça n'a pas fonctionné, je pense parce que Render utilisait la version 3.7, or j'ai utilisé la version 3.9
 pour mes programmes.
+
+Dans tous les cas, il vous faudra utiliser une version payante pour déployer le dashboard car les versions gratuites
+ne proposent pas suffisamment de mémoire pour installer tous les packages.
